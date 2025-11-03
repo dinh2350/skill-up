@@ -79,7 +79,74 @@ This document contains a list of PostgreSQL interview questions ranging from jun
 
 2.  **What is partitioning?**
 
-    - Partitioning is the process of dividing a large table into smaller, more manageable pieces (partitions), while still having the table appear as a single entity to queries. This can improve query performance and manageability. PostgreSQL supports range, list, and hash partitioning.
+    - Partitioning is the process of dividing a large table into smaller, more manageable pieces (partitions), while still having the table appear as a single entity to queries. This can improve query performance and manageability.
+
+    **Why Use Partitioning?**
+    - **Improved Query Performance**: Queries can scan only relevant partitions instead of the entire table (partition pruning)
+    - **Better Manageability**: Easier to maintain, backup, and restore smaller partitions
+    - **Faster Bulk Operations**: Loading or deleting data from specific partitions is faster
+    - **Storage Optimization**: Old partitions can be moved to slower, cheaper storage
+
+    **PostgreSQL Partitioning Types:**
+
+    1. **Range Partitioning**: Divides data based on a range of values (e.g., dates, IDs)
+       ```sql
+       CREATE TABLE sales (
+           id SERIAL,
+           sale_date DATE NOT NULL,
+           amount NUMERIC
+       ) PARTITION BY RANGE (sale_date);
+
+       CREATE TABLE sales_2023 PARTITION OF sales
+           FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
+
+       CREATE TABLE sales_2024 PARTITION OF sales
+           FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+       ```
+
+    2. **List Partitioning**: Divides data based on a list of discrete values (e.g., regions, categories)
+       ```sql
+       CREATE TABLE customers (
+           id SERIAL,
+           name VARCHAR(100),
+           country VARCHAR(50)
+       ) PARTITION BY LIST (country);
+
+       CREATE TABLE customers_us PARTITION OF customers
+           FOR VALUES IN ('USA', 'United States');
+
+       CREATE TABLE customers_eu PARTITION OF customers
+           FOR VALUES IN ('UK', 'France', 'Germany');
+       ```
+
+    3. **Hash Partitioning**: Distributes data evenly across partitions using a hash function
+       ```sql
+       CREATE TABLE orders (
+           id SERIAL,
+           customer_id INTEGER,
+           order_date DATE
+       ) PARTITION BY HASH (customer_id);
+
+       CREATE TABLE orders_p1 PARTITION OF orders
+           FOR VALUES WITH (MODULUS 4, REMAINDER 0);
+
+       CREATE TABLE orders_p2 PARTITION OF orders
+           FOR VALUES WITH (MODULUS 4, REMAINDER 1);
+       ```
+
+    **Key Considerations:**
+    - The parent table becomes a virtual table; data is stored only in partitions
+    - Indexes must be created on each partition separately (or on the parent table in PostgreSQL 11+)
+    - Primary keys and unique constraints must include the partition key
+    - Partition pruning (automatically skipping irrelevant partitions) requires the WHERE clause to match the partition key
+    - Maintenance operations like `VACUUM`, `ANALYZE` work on individual partitions
+
+    **Best Practices:**
+    - Choose partition keys based on common query patterns
+    - Keep the number of partitions manageable (hundreds, not thousands)
+    - Use range partitioning for time-series data
+    - Consider using declarative partitioning (PostgreSQL 10+) over inheritance-based partitioning
+    - Create indexes on frequently queried columns in each partition
 
 3.  **How do you optimize a query? Explain `EXPLAIN` and `EXPLAIN ANALYZE`.**
 
