@@ -30,6 +30,17 @@ This document contains a list of NestJS interview questions ranging from junior 
 6.  **What is dependency injection in NestJS?**
     - Dependency Injection (DI) is a design pattern where a class requests dependencies from external sources rather than creating them itself. NestJS has a built-in DI system. You can inject a provider (like a service) into a controller by adding it to the controller's constructor.
 
+7.  **What are Injection Scopes in NestJS?**
+    - Injection scopes determine the lifetime of a provider instance. NestJS supports three scopes:
+      - **SINGLETON (default)**: A single instance is shared across the entire application. The instance is created once and reused.
+      - **REQUEST**: A new instance is created for each incoming request and garbage collected after the request completes.
+      - **TRANSIENT**: A new instance is created each time the provider is injected.
+    - You can specify the scope using the `@Injectable()` decorator: `@Injectable({ scope: Scope.REQUEST })`
+    - **Important considerations**:
+      - REQUEST-scoped providers can impact performance as new instances are created for each request.
+      - When a provider is REQUEST-scoped, all providers that depend on it become REQUEST-scoped as well.
+      - TRANSIENT providers are never shared, so each consumer gets a fresh instance.
+
 ## Mid-level Developer Questions
 
 1.  **What are pipes in NestJS?**
