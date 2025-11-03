@@ -67,6 +67,20 @@ This document contains a list of NestJS interview questions ranging from junior 
 6.  **Explain how to connect to a database in NestJS.**
     - NestJS provides modules for integrating with various databases. For SQL databases, `@nestjs/typeorm` is commonly used. For NoSQL databases like MongoDB, `@nestjs/mongoose` is a popular choice. You configure the connection in the root module and then inject the repository or model into your services.
 
+7.  **What are Dynamic Modules in NestJS?**
+    - Dynamic modules allow you to create customizable modules that can register providers dynamically at runtime. They're essential for creating reusable modules that need configuration.
+    - **Key characteristics**:
+      - They return a `DynamicModule` object instead of being decorated with `@Module()`.
+      - Commonly use static methods like `register()`, `forRoot()`, or `forRootAsync()` to accept configuration.
+      - The returned object must include a `module` property pointing to the module class itself.
+    - **Common patterns**:
+      - **`register()`**: Used for configuring a module with specific options for the calling module. Each importing module gets its own instance.
+      - **`forRoot()`**: Used for configuring a module once at the root level, typically for singleton services like database connections.
+      - **`forRootAsync()`**: Similar to `forRoot()` but accepts asynchronous configuration (useful for `ConfigService`).
+      - **`forFeature()`**: Used to configure specific features of a module in different contexts (e.g., specific repositories in TypeORM).
+    - **Example use case**: The `@nestjs/config` module uses `ConfigModule.forRoot()` to accept configuration options, and `TypeOrmModule.forRoot()` accepts database connection options.
+    - **Benefits**: Enables creation of highly reusable and configurable modules that can be shared across projects or published as npm packages.
+
 ## Senior Developer Questions
 
 1.  **What are custom decorators? How do you create one?**
@@ -109,3 +123,99 @@ This document contains a list of NestJS interview questions ranging from junior 
 
 7.  **What is CQRS (Command and Query Responsibility Segregation) and how can it be implemented in NestJS?**
     - CQRS is a pattern that separates read and write operations for a data store. NestJS provides a `@nestjs/cqrs` module that helps implement this pattern with building blocks like Commands, Queries, Events, and Sagas.
+
+8.  **What is Module Reference and how is it used?**
+    - `ModuleRef` is a class that provides access to the internal list of providers and allows you to retrieve any provider dynamically at runtime using its injection token.
+    - **Key features**:
+      - **`get()`**: Retrieves a provider instance by token. Works with singleton-scoped providers.
+      - **`resolve()`**: Similar to `get()` but works with REQUEST-scoped and TRANSIENT-scoped providers, returning a new instance.
+      - **`create()`**: Dynamically instantiates a class that hasn't been registered as a provider.
+    - **Use cases**:
+      - Accessing providers dynamically when the specific provider isn't known at compile time.
+      - Implementing factory patterns or plugin systems.
+      - Working with circular dependencies in complex scenarios.
+    - **Example**: `const service = this.moduleRef.get(MyService);`
+    - **Important**: You must inject `ModuleRef` into your class constructor to use it.
+
+9.  **What is Lazy-loading Modules in NestJS?**
+    - Lazy-loading allows you to load modules on-demand rather than at application startup, which can significantly reduce bootstrap time and memory footprint.
+    - **Key concepts**:
+      - Particularly useful for serverless environments (AWS Lambda, Google Cloud Functions) where startup time matters.
+      - Background jobs, cron tasks, or CLI applications that don't need all modules loaded at once.
+      - Modules are loaded using `LazyModuleLoader` service.
+    - **Implementation**:
+      - Inject `LazyModuleLoader` into your service or controller.
+      - Use `lazyModuleLoader.load()` to load a module at runtime.
+      - Returns a module reference that you can use to retrieve providers.
+    - **Example**:
+      ```typescript
+      const moduleRef = await this.lazyModuleLoader.load(() => LazyModule);
+      const service = moduleRef.get(LazyService);
+      ```
+    - **Benefits**: Improved application startup time, reduced memory usage, better resource utilization in serverless environments.
+    - **Considerations**: First invocation will be slower as the module needs to be loaded and initialized.
+
+10. **What is Execution Context in NestJS?**
+    - `ExecutionContext` is an object that provides details about the current request being processed. It's available in guards, interceptors, and exception filters.
+    - **Key features**:
+      - Extends `ArgumentsHost` and provides additional methods for getting handler and class references.
+      - **`getHandler()`**: Returns a reference to the route handler method being invoked.
+      - **`getClass()`**: Returns the type of the controller class to which the current handler belongs.
+      - **`switchToHttp()`**: Returns an HTTP-specific context (request, response, next).
+      - **`switchToRpc()`**: Returns an RPC-specific context for microservices.
+      - **`switchToWs()`**: Returns a WebSocket-specific context.
+      - **`getType()`**: Returns the context type ('http', 'rpc', 'ws').
+    - **Use cases**:
+      - Creating context-aware guards that work across HTTP, WebSocket, and microservices.
+      - Accessing custom metadata attached to handlers using `Reflector`.
+      - Building universal interceptors that handle different transport layers.
+    - **Example**:
+      ```typescript
+      const request = context.switchToHttp().getRequest();
+      const handler = context.getHandler();
+      ```
+
+11. **What are Lifecycle Events in NestJS?**
+    - Lifecycle events (hooks) allow you to respond to key moments in the lifecycle of a module, provider, or controller.
+    - **Available lifecycle hooks** (in order):
+      1. **`onModuleInit()`**: Called once the host module's dependencies have been resolved. Good for initialization logic.
+      2. **`onApplicationBootstrap()`**: Called once all modules have been initialized, just before the application starts listening for connections.
+      3. **`onModuleDestroy()`**: Called when the module is being destroyed (before cleanup).
+      4. **`beforeApplicationShutdown()`**: Called before the application shutdown process begins. Receives a signal parameter.
+      5. **`onApplicationShutdown()`**: Called during the shutdown process. Cleanup logic goes here.
+    - **Implementation**: Classes implement interfaces like `OnModuleInit`, `OnApplicationBootstrap`, etc.
+    - **Example**:
+      ```typescript
+      @Injectable()
+      export class MyService implements OnModuleInit, OnApplicationShutdown {
+        onModuleInit() {
+          console.log('Module initialized');
+        }
+        onApplicationShutdown(signal?: string) {
+          console.log('Application shutting down', signal);
+        }
+      }
+      ```
+    - **Use cases**: Database connection setup/teardown, graceful shutdown, resource cleanup, cache warming, subscription management.
+
+12. **What is the Discovery Service in NestJS?**
+    - `DiscoveryService` is part of the `@nestjs/core` package that allows you to discover and retrieve information about providers, controllers, and their metadata at runtime.
+    - **Key features**:
+      - **`getProviders()`**: Returns all providers registered in the application.
+      - **`getControllers()`**: Returns all controllers registered in the application.
+      - Each returned wrapper contains the instance and metadata about the provider/controller.
+      - Works in conjunction with `MetadataScanner` and `Reflector` to inspect decorators and metadata.
+    - **Use cases**:
+      - Building framework extensions or plugins that need to discover decorated classes.
+      - Implementing automatic registration systems (e.g., finding all classes with a specific decorator).
+      - Creating command patterns where you discover all command handlers automatically.
+      - Building scheduling systems that discover methods with `@Cron()` decorators.
+    - **Example**:
+      ```typescript
+      const providers = this.discoveryService.getProviders();
+      const myProviders = providers.filter(wrapper => 
+        wrapper.metatype && this.reflector.get('my-metadata', wrapper.metatype)
+      );
+      ```
+    - **Best practice**: Often used with custom decorators and the `Reflector` service to build powerful meta-programming capabilities.
+    - **Note**: This is an advanced feature typically used when building libraries, frameworks, or complex plugin systems on top of NestJS.
