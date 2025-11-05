@@ -73,7 +73,8 @@ function permute_Backtracking(nums) {
 function permute_Set(nums) {
   const result = [];
 
-  function backtrack(current, remaining) {
+  function 
+  (current, remaining) {
     if (current.length === nums.length) {
       result.push([...current]);
       return;

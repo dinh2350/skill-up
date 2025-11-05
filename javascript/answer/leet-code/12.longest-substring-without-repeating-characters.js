@@ -54,7 +54,7 @@ function lengthOfLongestSubstring(s) {
     // Move left pointer to skip the duplicate
     if (charIndexMap.has(currentChar)) {
       // Important: only move forward, never backward
-      // Example: "abba" - when we see second 'a', left should not go back
+      // Example: "abcbcdbb" - when we see second 'a', left should not go back
       left = Math.max(left, charIndexMap.get(currentChar) + 1);
     }
 

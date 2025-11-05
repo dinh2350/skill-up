@@ -1,41 +1,45 @@
-/**
- * Returns both max sum and the subarray indices
- * @param {number[]} nums
- * @return {object}
- */
-function maxSubArrayWithIndices(nums) {
-  let maxSum = nums[0];
-  let currentSum = nums[0];
+function canFinish_DFS(numCourses, prerequisites) {
+  // Build adjacency list
+  const graph = Array.from({ length: numCourses }, () => []);
 
-  let maxStart = 0;
-  let maxEnd = 0;
-  let currentStart = 0;
+  for (const [course, prereq] of prerequisites) {
+    graph[prereq].push(course); // prereq -> course edge
+  }
 
-  for (let i = 0; i < nums.length; i++) {
-    // If current sum becomes negative, start fresh from current element
-    console.log(nums[i], "-", currentSum);
-    if (currentSum < 0) {
-      currentSum = nums[i];
-      currentStart = i;
-    } else {
-      currentSum += nums[i];
+  console.log("graph:", graph);
+
+  // States: 0 = unvisited, 1 = visiting, 2 = visited
+  const state = new Array(numCourses).fill(0);
+
+  // Helper: Check if there's a cycle starting from 'course'
+  function hasCycle(course) {
+    if (state[course] === 1) return true; // Cycle detected!
+    if (state[course] === 2) return false; // Already checked, safe
+
+    // Mark as visiting
+    state[course] = 1;
+
+    // Check all neighbors
+    for (const nextCourse of graph[course]) {
+      if (hasCycle(nextCourse)) {
+        return true;
+      }
     }
 
-    // Update max if we found a better sum
-    if (currentSum > maxSum) {
-      maxSum = currentSum;
-      maxStart = currentStart;
-      maxEnd = i;
+    // Mark as visited (finished processing)
+    state[course] = 2;
+    return false;
+  }
+
+  // Check each course (handle disconnected components)
+  for (let i = 0; i < numCourses; i++) {
+    if (state[i] === 0 && hasCycle(i)) {
+      return false;
     }
   }
 
-  return {
-    maxSum,
-    start: maxStart,
-    end: maxEnd,
-    subarray: nums.slice(maxStart, maxEnd + 1),
-  };
+  return true;
 }
 
-const result = maxSubArrayWithIndices([-2, 1, -3, 0, 4, -1, 2, 1, -5, 4]);
-console.log(result); // { maxSum: 6, start: 3, end: 7, subarray: [ 0, 4, -1, 2, 1 ] }
+const result = canFinish_DFS(3, [[1,0],[2,0],[3,1]]); // Example usage
+console.log("Can finish courses:", result);
