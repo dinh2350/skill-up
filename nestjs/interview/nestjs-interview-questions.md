@@ -1,221 +1,307 @@
 # NestJS Interview Questions
 
-This document contains a list of NestJS interview questions ranging from junior to senior levels.
+This document contains a comprehensive list of NestJS interview questions ranging from junior to senior developer and software engineer levels.
 
 ## Junior Developer Questions
 
-1.  **What is NestJS?**
+### Core Concepts
 
-    - NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications. It uses modern JavaScript, is built with and fully supports TypeScript, and combines elements of OOP (Object-Oriented Programming), FP (Functional Programming), and FRP (Functional Reactive Programming).
+1. What is NestJS?
+2. What are the main building blocks of a NestJS application?
+3. What is a decorator in NestJS? Give some examples.
+4. What is a DTO (Data Transfer Object)?
+5. How do you define a route in NestJS?
+6. What is dependency injection in NestJS?
+7. What are Injection Scopes in NestJS?
+8. What is the difference between SINGLETON, REQUEST, and TRANSIENT scopes?
+9. What is a module in NestJS?
+10. What is a controller in NestJS?
+11. What is a provider in NestJS?
+12. What is the `@Injectable()` decorator used for?
+13. How do you create a new NestJS project?
+14. What is the purpose of the `main.ts` file?
+15. What is the difference between `@Module()` and `@Global()`?
 
-2.  **What are the main building blocks of a NestJS application?**
+### Basic Operations
 
-    - **Modules**: Used to organize the application structure.
-    - **Controllers**: Responsible for handling incoming requests and returning responses.
-    - **Providers (Services)**: Can be injected as dependencies into other components. They are used to abstract business logic.
-
-3.  **What is a decorator in NestJS? Give some examples.**
-
-    - Decorators are a key feature of NestJS, used to add metadata to classes, methods, or properties.
-    - Examples: `@Module()`, `@Controller()`, `@Injectable()`, `@Get()`, `@Post()`, `@Body()`, `@Param()`.
-
-4.  **What is a DTO (Data Transfer Object)?**
-
-    - A DTO is an object that defines how data will be sent over the network. It's a good practice to use DTOs to validate the request body. The `class-validator` and `class-transformer` libraries are often used for this.
-
-5.  **How do you define a route in NestJS?**
-
-    - Routes are defined within a controller using decorators like `@Get()`, `@Post()`, `@Put()`, `@Delete()`, etc. The path for the controller is defined with the `@Controller()` decorator.
-
-6.  **What is dependency injection in NestJS?**
-    - Dependency Injection (DI) is a design pattern where a class requests dependencies from external sources rather than creating them itself. NestJS has a built-in DI system. You can inject a provider (like a service) into a controller by adding it to the controller's constructor.
-
-7.  **What are Injection Scopes in NestJS?**
-    - Injection scopes determine the lifetime of a provider instance. NestJS supports three scopes:
-      - **SINGLETON (default)**: A single instance is shared across the entire application. The instance is created once and reused.
-      - **REQUEST**: A new instance is created for each incoming request and garbage collected after the request completes.
-      - **TRANSIENT**: A new instance is created each time the provider is injected.
-    - You can specify the scope using the `@Injectable()` decorator: `@Injectable({ scope: Scope.REQUEST })`
-    - **Important considerations**:
-      - REQUEST-scoped providers can impact performance as new instances are created for each request.
-      - When a provider is REQUEST-scoped, all providers that depend on it become REQUEST-scoped as well.
-      - TRANSIENT providers are never shared, so each consumer gets a fresh instance.
+16. How do you handle GET requests in NestJS?
+17. How do you handle POST requests in NestJS?
+18. How do you access route parameters?
+19. How do you access query parameters?
+20. How do you access the request body?
+21. What is the `@Body()` decorator?
+22. What is the `@Param()` decorator?
+23. What is the `@Query()` decorator?
+24. How do you return different HTTP status codes?
+25. What is the `@HttpCode()` decorator?
+26. How do you handle file uploads in NestJS?
+27. What is the difference between `@Res()` and `@Response()`?
+28. How do you set custom headers in a response?
+29. What is the purpose of the `@Req()` decorator?
+30. How do you handle exceptions in NestJS?
 
 ## Mid-level Developer Questions
 
-1.  **What are pipes in NestJS?**
+### Advanced Request Handling
 
-    - Pipes are used for transformation and validation of incoming data. They operate on the arguments being processed by a route handler. A common use case is validating the request body against a DTO. NestJS comes with built-in pipes like `ValidationPipe` and `ParseIntPipe`.
+31. What are pipes in NestJS?
+32. What are guards in NestJS?
+33. What are interceptors in NestJS?
+34. What is the difference between middleware and interceptors?
+35. What are filters in NestJS?
+36. What is the `ValidationPipe` and how do you use it?
+37. What is the `ParseIntPipe` used for?
+38. How do you create a custom pipe?
+39. How do you create a custom guard?
+40. How do you create a custom interceptor?
+41. What is the request lifecycle in NestJS?
+42. In what order do middleware, guards, interceptors, and pipes execute?
+43. How do you implement authentication in NestJS?
+44. How do you implement authorization in NestJS?
+45. What is the difference between authentication and authorization?
 
-2.  **What are guards in NestJS?**
+### Configuration & Database
 
-    - Guards are used for authorization. They determine whether a given request will be handled by the route handler or not, depending on certain conditions (like user roles or permissions). They implement the `CanActivate` interface.
+46. How do you handle configuration in a NestJS application?
+47. What is the `@nestjs/config` module?
+48. How do you use environment variables in NestJS?
+49. How do you connect to a database in NestJS?
+50. What is TypeORM and how do you use it with NestJS?
+51. What is Mongoose and how do you use it with NestJS?
+52. What is Prisma and how do you integrate it with NestJS?
+53. How do you define entities in TypeORM?
+54. How do you create database migrations?
+55. What is a repository pattern in NestJS?
+56. How do you perform database transactions?
+57. What is the difference between `@nestjs/typeorm` and `@nestjs/mongoose`?
+58. How do you handle database relationships in TypeORM?
+59. What are database seeders and how do you implement them?
+60. How do you implement pagination in NestJS?
 
-3.  **What are interceptors in NestJS?**
+### Validation & Transformation
 
-    - Interceptors are used to bind extra logic to a request/response cycle. They can transform the result from a method, transform the exception thrown from a method, extend the basic method behavior, or completely override a method. They implement the `NestInterceptor` interface.
+61. What is `class-validator`?
+62. What is `class-transformer`?
+63. How do you validate nested objects?
+64. How do you create custom validation decorators?
+65. What is the difference between transformation and validation?
+66. How do you handle optional fields in DTOs?
+67. How do you implement conditional validation?
+68. What is the `@IsOptional()` decorator?
+69. What is the `@Transform()` decorator?
+70. How do you validate arrays in DTOs?
 
-4.  **What is the difference between middleware and interceptors?**
+## Senior Developer & Software Engineer Questions
 
-    - **Middleware**: Runs before the route handler. It has access to the raw request and response objects (`req`, `res`). It's mainly used for tasks like logging, CORS, or handling cookies. Middleware is less "Nest-aware" than interceptors.
-    - **Interceptors**: Have access to the `ExecutionContext`, which provides more details about the current process. They can be used for both request and response manipulation and are more integrated into the NestJS lifecycle.
+### Architecture & Design Patterns
 
-5.  **How do you handle configuration in a NestJS application?**
+71. What are Dynamic Modules in NestJS?
+72. What is the difference between `register()`, `forRoot()`, and `forFeature()`?
+73. What is `forRootAsync()` used for?
+74. What are custom decorators? How do you create one?
+75. How do you implement the repository pattern in NestJS?
+76. What is the factory pattern and how do you use it in NestJS?
+77. How do you implement the strategy pattern in NestJS?
+78. What is CQRS (Command and Query Responsibility Segregation)?
+79. How can CQRS be implemented in NestJS?
+80. What is Event Sourcing?
+81. What is the difference between Commands and Queries in CQRS?
+82. What are Sagas in the context of CQRS?
+83. How do you implement domain-driven design (DDD) in NestJS?
+84. What are Aggregates in DDD?
+85. What are Value Objects in DDD?
 
-    - The `@nestjs/config` module is the standard way to handle configuration. It uses a `.env` file to store environment variables and provides a `ConfigService` to access them in a type-safe way.
+### Advanced Concepts
 
-6.  **Explain how to connect to a database in NestJS.**
-    - NestJS provides modules for integrating with various databases. For SQL databases, `@nestjs/typeorm` is commonly used. For NoSQL databases like MongoDB, `@nestjs/mongoose` is a popular choice. You configure the connection in the root module and then inject the repository or model into your services.
+86. What is Module Reference and how is it used?
+87. What is Lazy-loading Modules in NestJS?
+88. What is Execution Context in NestJS?
+89. What are Lifecycle Events in NestJS?
+90. What is the Discovery Service in NestJS?
+91. What is the `Reflector` class used for?
+92. How do you implement circular dependencies in NestJS?
+93. What is the `forwardRef()` utility?
+94. How do you handle race conditions in NestJS?
+95. What is the `MetadataScanner` service?
 
-7.  **What are Dynamic Modules in NestJS?**
-    - Dynamic modules allow you to create customizable modules that can register providers dynamically at runtime. They're essential for creating reusable modules that need configuration.
-    - **Key characteristics**:
-      - They return a `DynamicModule` object instead of being decorated with `@Module()`.
-      - Commonly use static methods like `register()`, `forRoot()`, or `forRootAsync()` to accept configuration.
-      - The returned object must include a `module` property pointing to the module class itself.
-    - **Common patterns**:
-      - **`register()`**: Used for configuring a module with specific options for the calling module. Each importing module gets its own instance.
-      - **`forRoot()`**: Used for configuring a module once at the root level, typically for singleton services like database connections.
-      - **`forRootAsync()`**: Similar to `forRoot()` but accepts asynchronous configuration (useful for `ConfigService`).
-      - **`forFeature()`**: Used to configure specific features of a module in different contexts (e.g., specific repositories in TypeORM).
-    - **Example use case**: The `@nestjs/config` module uses `ConfigModule.forRoot()` to accept configuration options, and `TypeOrmModule.forRoot()` accepts database connection options.
-    - **Benefits**: Enables creation of highly reusable and configurable modules that can be shared across projects or published as npm packages.
+### Microservices & Communication
 
-## Senior Developer Questions
+96. What are microservices in the context of NestJS?
+97. What transport layers does NestJS support for microservices?
+98. How do you create a microservice in NestJS?
+99. What is the difference between HTTP microservices and message-based microservices?
+100. How do you implement gRPC in NestJS?
+101. How do you implement message patterns with TCP?
+102. How do you use Redis for microservices communication?
+103. How do you implement RabbitMQ in NestJS?
+104. What is the `@MessagePattern()` decorator?
+105. What is the `@EventPattern()` decorator?
+106. How do you handle microservice exceptions?
+107. What is service discovery in microservices?
+108. How do you implement API Gateway pattern in NestJS?
+109. What is circuit breaker pattern and how do you implement it?
+110. How do you handle distributed transactions?
 
-1.  **What are custom decorators? How do you create one?**
+### WebSockets & Real-time
 
-    - Custom decorators allow you to compose multiple decorators into one or to create a decorator that extracts data from the request in a reusable way. You can create a custom decorator using the `createParamDecorator()` function.
+111. How do you implement WebSockets in NestJS?
+112. What is the `@WebSocketGateway()` decorator?
+113. How do you handle WebSocket events?
+114. What is the difference between `@SubscribeMessage()` and `@MessageBody()`?
+115. How do you implement Socket.io in NestJS?
+116. How do you handle WebSocket authentication?
+117. How do you broadcast messages to all connected clients?
+118. How do you implement rooms in WebSocket?
+119. How do you handle WebSocket namespaces?
+120. What is the difference between WebSockets and Server-Sent Events (SSE)?
 
-2.  **Explain the request lifecycle in NestJS.**
+### Testing
 
-    - A request goes through the following flow:
-      1.  Middleware
-      2.  Guards
-      3.  Interceptors (before the handler)
-      4.  Pipes
-      5.  Route Handler
-      6.  Interceptors (after the handler)
-      7.  Exception Filters
+121. What are some strategies for testing a NestJS application?
+122. How do you write unit tests in NestJS?
+123. How do you write integration tests in NestJS?
+124. How do you write end-to-end tests in NestJS?
+125. What is `Test.createTestingModule()`?
+126. How do you mock dependencies in tests?
+127. How do you test controllers in NestJS?
+128. How do you test services in NestJS?
+129. How do you test guards in NestJS?
+130. How do you test interceptors in NestJS?
+131. How do you test pipes in NestJS?
+132. What is the difference between `jest` and `supertest`?
+133. How do you test database operations?
+134. How do you implement test fixtures?
+135. How do you test WebSocket gateways?
+136. How do you implement code coverage in NestJS?
+137. What is mutation testing?
+138. How do you test microservices?
+139. How do you implement contract testing?
+140. What is the testing pyramid?
 
-3.  **What are microservices in the context of NestJS?**
+### Custom Providers
 
-    - NestJS has first-class support for building microservices. It provides a `Microservice` module that allows you to create services that communicate over different transport layers like TCP, Redis, gRPC, or RabbitMQ.
+141. How would you implement a custom provider?
+142. What is a Value Provider?
+143. What is a Factory Provider?
+144. What is an Alias Provider?
+145. What is a Class Provider?
+146. When would you use `useValue` vs `useFactory`?
+147. How do you inject dependencies into a factory provider?
+148. What is `useExisting` used for?
+149. How do you create async providers?
+150. What is the `@Inject()` decorator used for?
 
-4.  **How does NestJS handle asynchronous operations?**
+### Performance & Optimization
 
-    - NestJS is built on Node.js and fully supports `async/await`. Route handlers, services, and other components can be `async` functions that return a `Promise`. NestJS will automatically resolve the promise before sending the response.
+151. How do you optimize a NestJS application for production?
+152. What are some caching strategies in NestJS?
+153. How do you implement Redis caching in NestJS?
+154. What is the `@nestjs/cache-manager` module?
+155. How do you implement response compression?
+156. How do you handle rate limiting in NestJS?
+157. What is the `@nestjs/throttler` module?
+158. How do you implement database connection pooling?
+159. How do you optimize database queries?
+160. How do you implement lazy loading for better performance?
+161. What is clustering and how do you implement it in NestJS?
+162. How do you profile a NestJS application?
+163. What are some common performance bottlenecks?
+164. How do you implement pagination efficiently?
+165. How do you handle memory leaks in NestJS?
 
-5.  **What are some strategies for testing a NestJS application?**
+### Security
 
-    - Discuss different types of testing:
-      - **Unit Testing**: Testing individual components (services, controllers) in isolation. NestJS provides a `Test.createTestingModule()` to create a testing module.
-      - **Integration Testing**: Testing how multiple components work together, often involving a database connection.
-      - **End-to-End (e2e) Testing**: Testing the full request/response cycle. The NestJS starter project comes with a setup for e2e testing using Supertest.
+166. What are some security best practices for NestJS applications?
+167. How do you implement JWT authentication in NestJS?
+168. What is Passport.js and how do you use it with NestJS?
+169. How do you implement OAuth2 in NestJS?
+170. What is helmet and why should you use it?
+171. How do you prevent SQL injection attacks?
+172. How do you prevent XSS attacks in NestJS?
+173. How do you implement CSRF protection?
+174. What is CORS and how do you configure it?
+175. How do you implement role-based access control (RBAC)?
+176. How do you implement attribute-based access control (ABAC)?
+177. How do you secure sensitive data in environment variables?
+178. How do you implement API key authentication?
+179. What is the principle of least privilege?
+180. How do you implement two-factor authentication?
+181. How do you handle password hashing?
+182. What is bcrypt and how do you use it?
+183. How do you implement refresh tokens?
+184. How do you handle session management?
+185. How do you implement security headers?
 
-6.  **How would you implement a custom provider?**
+### GraphQL
 
-    - Discuss the different ways to define a provider:
-      - **Class Provider**: The standard way, using `@Injectable()`.
-      - **Value Provider**: Using `useValue` to provide a constant value.
-      - **Factory Provider**: Using `useFactory` to dynamically create a provider. This is useful when the provider has complex dependencies.
-      - **Alias Provider**: Using `useExisting` to create an alias for an existing provider.
+186. How do you implement GraphQL in NestJS?
+187. What is the `@nestjs/graphql` module?
+188. What is the difference between code-first and schema-first approaches?
+189. How do you define resolvers in NestJS?
+190. What are GraphQL mutations?
+191. What are GraphQL subscriptions?
+192. How do you implement authentication in GraphQL?
+193. How do you handle N+1 query problem in GraphQL?
+194. What is DataLoader and how do you use it?
+195. How do you implement pagination in GraphQL?
+196. What are GraphQL directives?
+197. How do you implement custom scalars in GraphQL?
+198. How do you handle file uploads in GraphQL?
+199. What is the difference between Query and Mutation?
+200. How do you implement real-time updates with GraphQL subscriptions?
 
-7.  **What is CQRS (Command and Query Responsibility Segregation) and how can it be implemented in NestJS?**
-    - CQRS is a pattern that separates read and write operations for a data store. NestJS provides a `@nestjs/cqrs` module that helps implement this pattern with building blocks like Commands, Queries, Events, and Sagas.
+### DevOps & Deployment
 
-8.  **What is Module Reference and how is it used?**
-    - `ModuleRef` is a class that provides access to the internal list of providers and allows you to retrieve any provider dynamically at runtime using its injection token.
-    - **Key features**:
-      - **`get()`**: Retrieves a provider instance by token. Works with singleton-scoped providers.
-      - **`resolve()`**: Similar to `get()` but works with REQUEST-scoped and TRANSIENT-scoped providers, returning a new instance.
-      - **`create()`**: Dynamically instantiates a class that hasn't been registered as a provider.
-    - **Use cases**:
-      - Accessing providers dynamically when the specific provider isn't known at compile time.
-      - Implementing factory patterns or plugin systems.
-      - Working with circular dependencies in complex scenarios.
-    - **Example**: `const service = this.moduleRef.get(MyService);`
-    - **Important**: You must inject `ModuleRef` into your class constructor to use it.
+201. How do you deploy a NestJS application?
+202. How do you containerize a NestJS application with Docker?
+203. How do you implement health checks in NestJS?
+204. What is the `@nestjs/terminus` module?
+205. How do you implement graceful shutdown?
+206. How do you handle application logging?
+207. What is Winston and how do you integrate it?
+208. How do you implement structured logging?
+209. How do you monitor a NestJS application in production?
+210. How do you implement distributed tracing?
+211. What is OpenTelemetry?
+212. How do you implement CI/CD for NestJS applications?
+213. How do you handle database migrations in production?
+214. How do you implement blue-green deployment?
+215. How do you implement canary deployment?
+216. How do you handle secrets management?
+217. How do you implement auto-scaling?
+218. What is Kubernetes and how do you deploy NestJS on it?
+219. How do you implement horizontal pod autoscaling?
+220. How do you handle application configuration in different environments?
 
-9.  **What is Lazy-loading Modules in NestJS?**
-    - Lazy-loading allows you to load modules on-demand rather than at application startup, which can significantly reduce bootstrap time and memory footprint.
-    - **Key concepts**:
-      - Particularly useful for serverless environments (AWS Lambda, Google Cloud Functions) where startup time matters.
-      - Background jobs, cron tasks, or CLI applications that don't need all modules loaded at once.
-      - Modules are loaded using `LazyModuleLoader` service.
-    - **Implementation**:
-      - Inject `LazyModuleLoader` into your service or controller.
-      - Use `lazyModuleLoader.load()` to load a module at runtime.
-      - Returns a module reference that you can use to retrieve providers.
-    - **Example**:
-      ```typescript
-      const moduleRef = await this.lazyModuleLoader.load(() => LazyModule);
-      const service = moduleRef.get(LazyService);
-      ```
-    - **Benefits**: Improved application startup time, reduced memory usage, better resource utilization in serverless environments.
-    - **Considerations**: First invocation will be slower as the module needs to be loaded and initialized.
+### Advanced Topics
 
-10. **What is Execution Context in NestJS?**
-    - `ExecutionContext` is an object that provides details about the current request being processed. It's available in guards, interceptors, and exception filters.
-    - **Key features**:
-      - Extends `ArgumentsHost` and provides additional methods for getting handler and class references.
-      - **`getHandler()`**: Returns a reference to the route handler method being invoked.
-      - **`getClass()`**: Returns the type of the controller class to which the current handler belongs.
-      - **`switchToHttp()`**: Returns an HTTP-specific context (request, response, next).
-      - **`switchToRpc()`**: Returns an RPC-specific context for microservices.
-      - **`switchToWs()`**: Returns a WebSocket-specific context.
-      - **`getType()`**: Returns the context type ('http', 'rpc', 'ws').
-    - **Use cases**:
-      - Creating context-aware guards that work across HTTP, WebSocket, and microservices.
-      - Accessing custom metadata attached to handlers using `Reflector`.
-      - Building universal interceptors that handle different transport layers.
-    - **Example**:
-      ```typescript
-      const request = context.switchToHttp().getRequest();
-      const handler = context.getHandler();
-      ```
-
-11. **What are Lifecycle Events in NestJS?**
-    - Lifecycle events (hooks) allow you to respond to key moments in the lifecycle of a module, provider, or controller.
-    - **Available lifecycle hooks** (in order):
-      1. **`onModuleInit()`**: Called once the host module's dependencies have been resolved. Good for initialization logic.
-      2. **`onApplicationBootstrap()`**: Called once all modules have been initialized, just before the application starts listening for connections.
-      3. **`onModuleDestroy()`**: Called when the module is being destroyed (before cleanup).
-      4. **`beforeApplicationShutdown()`**: Called before the application shutdown process begins. Receives a signal parameter.
-      5. **`onApplicationShutdown()`**: Called during the shutdown process. Cleanup logic goes here.
-    - **Implementation**: Classes implement interfaces like `OnModuleInit`, `OnApplicationBootstrap`, etc.
-    - **Example**:
-      ```typescript
-      @Injectable()
-      export class MyService implements OnModuleInit, OnApplicationShutdown {
-        onModuleInit() {
-          console.log('Module initialized');
-        }
-        onApplicationShutdown(signal?: string) {
-          console.log('Application shutting down', signal);
-        }
-      }
-      ```
-    - **Use cases**: Database connection setup/teardown, graceful shutdown, resource cleanup, cache warming, subscription management.
-
-12. **What is the Discovery Service in NestJS?**
-    - `DiscoveryService` is part of the `@nestjs/core` package that allows you to discover and retrieve information about providers, controllers, and their metadata at runtime.
-    - **Key features**:
-      - **`getProviders()`**: Returns all providers registered in the application.
-      - **`getControllers()`**: Returns all controllers registered in the application.
-      - Each returned wrapper contains the instance and metadata about the provider/controller.
-      - Works in conjunction with `MetadataScanner` and `Reflector` to inspect decorators and metadata.
-    - **Use cases**:
-      - Building framework extensions or plugins that need to discover decorated classes.
-      - Implementing automatic registration systems (e.g., finding all classes with a specific decorator).
-      - Creating command patterns where you discover all command handlers automatically.
-      - Building scheduling systems that discover methods with `@Cron()` decorators.
-    - **Example**:
-      ```typescript
-      const providers = this.discoveryService.getProviders();
-      const myProviders = providers.filter(wrapper => 
-        wrapper.metatype && this.reflector.get('my-metadata', wrapper.metatype)
-      );
-      ```
-    - **Best practice**: Often used with custom decorators and the `Reflector` service to build powerful meta-programming capabilities.
-    - **Note**: This is an advanced feature typically used when building libraries, frameworks, or complex plugin systems on top of NestJS.
+221. How do you implement multi-tenancy in NestJS?
+222. How do you implement soft deletes?
+223. How do you implement audit logging?
+224. How do you implement event-driven architecture?
+225. What is the difference between events and messages?
+226. How do you implement background jobs in NestJS?
+227. What is BullMQ and how do you use it with NestJS?
+228. How do you implement scheduled tasks (cron jobs)?
+229. What is the `@nestjs/schedule` module?
+230. How do you implement worker threads in NestJS?
+231. How do you handle long-running processes?
+232. How do you implement idempotency in APIs?
+233. How do you implement API versioning?
+234. What are some strategies for API versioning?
+235. How do you implement request/response logging?
+236. How do you implement global exception filters?
+237. How do you implement custom exception classes?
+238. How do you handle file streaming?
+239. How do you implement server-side rendering (SSR)?
+240. How do you implement webhooks in NestJS?
+241. How do you handle webhook retries?
+242. How do you implement feature flags?
+243. How do you implement A/B testing?
+244. How do you implement distributed locks?
+245. How do you implement saga pattern for distributed transactions?
+246. How do you handle eventual consistency?
+247. What is the outbox pattern?
+248. How do you implement API documentation?
+249. What is Swagger and how do you integrate it with NestJS?
+250. How do you implement OpenAPI specification?
