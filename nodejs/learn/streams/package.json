@@ -1,0 +1,37 @@
+{
+  "name": "nodejs-streams-examples",
+  "version": "1.0.0",
+  "description": "Comprehensive Node.js Streams examples with real-world use cases and production patterns",
+  "main": "index.js",
+  "scripts": {
+    "readable": "node 01-readable-streams.js",
+    "writable": "node 02-writable-streams.js",
+    "transform": "node 03-transform-streams.js",
+    "duplex": "node 04-duplex-streams.js",
+    "production": "node 05-production-patterns.js",
+    "all": "npm run readable && npm run writable && npm run transform && npm run duplex && npm run production",
+    "clean": "node -e \"const fs = require('fs'); const path = require('path'); const files = fs.readdirSync(__dirname).filter(f => f.startsWith('output-') || f.startsWith('compressed') || f.startsWith('decrypted') || f.startsWith('uploaded-') || f.startsWith('app.') || f.startsWith('part') || f.startsWith('merged') || f.startsWith('sample.log') || f.startsWith('secure.')); files.forEach(f => { try { fs.unlinkSync(path.join(__dirname, f)); console.log('Deleted:', f); } catch(e) {} });\"",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "nodejs",
+    "streams",
+    "readable",
+    "writable",
+    "transform",
+    "duplex",
+    "backpressure",
+    "pipeline",
+    "real-world",
+    "production",
+    "examples",
+    "tutorial"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

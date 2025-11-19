@@ -34,13 +34,13 @@ This document contains a comprehensive list of Node.js interview questions rangi
 
 1. What is the difference between `process.nextTick()` and `setImmediate()`?
 2. What are streams in Node.js?
-3. How does Node.js handle child processes?
+3. How does Node.js handle child processes? **→ [See detailed examples](../child-processes/)**
 4. What is middleware in the context of Express.js?
 5. Explain error handling in Node.js.
 6. What is the purpose of `module.exports` and `exports`?
-7. What is the difference between `fork()` and `spawn()` in the `child_process` module?
+7. What is the difference between `fork()` and `spawn()` in the `child_process` module? **→ [See detailed examples](../child-processes/)**
 8. What are some common use cases for Node.js?
-9. What is the difference between `exec()` and `execFile()` in the child_process module?
+9. What is the difference between `exec()` and `execFile()` in the child_process module? **→ [See detailed examples](../child-processes/)**
 10. What are EventEmitters in Node.js?
 11. What is clustering in Node.js?
 12. What is the purpose of the `cluster` module?

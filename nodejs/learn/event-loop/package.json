@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-event-loop-examples",
+  "version": "1.0.0",
+  "description": "Comprehensive examples of Node.js Event Loop with real-world use cases",
+  "scripts": {
+    "phases": "node 01-event-loop-phases.js",
+    "microtasks": "node 02-microtasks-macrotasks.js",
+    "blocking": "node 03-blocking-vs-nonblocking.js",
+    "practical": "node 04-practical-use-cases.js",
+    "all": "npm run phases && npm run microtasks && npm run blocking && npm run practical",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "nodejs",
+    "event-loop",
+    "async",
+    "non-blocking",
+    "microtasks",
+    "macrotasks",
+    "performance"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

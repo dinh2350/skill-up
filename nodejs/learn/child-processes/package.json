@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-child-processes-examples",
+  "version": "1.0.0",
+  "description": "Real-world examples of Node.js child processes",
+  "main": "index.js",
+  "scripts": {
+    "example:spawn": "node 01-spawn-examples.js",
+    "example:exec": "node 02-exec-examples.js",
+    "example:execFile": "node 03-execFile-examples.js",
+    "example:fork": "node 04-fork-examples.js",
+    "example:advanced": "node 05-advanced-examples.js",
+    "example:all": "npm run example:spawn && npm run example:exec && npm run example:execFile && npm run example:fork && npm run example:advanced"
+  },
+  "keywords": [
+    "nodejs",
+    "child-process",
+    "spawn",
+    "exec",
+    "execFile",
+    "fork",
+    "worker",
+    "parallel-processing",
+    "concurrency"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
